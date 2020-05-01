@@ -1,18 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:heartcade/screens/splash/splash_screen.dart';
+import 'package:heartcade/pages/sign_in_page.dart';
+import 'package:provider/provider.dart';
 
-void main() => runApp(MyApp());
+import 'repository/apple_sign_in_available.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final appleSignInAvailable = await AppleSignInAvailable.check();
+  runApp(Provider<AppleSignInAvailable>.value(
+    value: appleSignInAvailable,
+    child: MyApp(),
+  ));
+}
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.indigo,
       ),
-      home: SplashScreen(),
+      home: SignInPage(),
     );
   }
 }
